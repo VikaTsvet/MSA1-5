@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+    monolit-app:
+        image: monolit-app:1.1.0
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8088:8088"
+        depends_on:
+            - postgres
+        environment:
+            SERVER_PORT: 8088
+            SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/crud_db
+            SPRING_DATASOURCE_USERNAME: postgres
+            SPRING_DATASOURCE_PASSWORD: postgres
+
+    postgres:
+        image: postgres:15-alpine
+        ports:
+            - "5433:5432"
+        environment:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_DB: crud_db
